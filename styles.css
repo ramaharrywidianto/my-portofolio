@@ -1,0 +1,71 @@
+
+.hero-bg,
+.bg-gradient-home {
+  background: linear-gradient(135deg, #0d6efd, #6f42c1);
+  min-height: 100vh;
+}
+
+body {
+  scroll-behavior: smooth;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+section h2 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+
+.hero-img,
+.rounded-circle {
+  object-fit: cover;
+  width: 140px;
+  height: 140px;
+}
+
+
+.bar-html { width: 90%; }
+.bar-css { width: 85%; }
+.bar-js { width: 70%; }
+.bar-laravel { width: 80%; }
+.bar-networking { width: 90%; }
+.bar-cybersec { width: 60%; }
+
+
+.whatsapp-float,
+.btn-whatsapp {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+}
+
+
+#blog .card-title {
+  font-weight: 600;
+  color: #6f42c1;
+}
+
+
+.navbar {
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar.scrolled {
+  background-color: #343a40 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer small {
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+
+.social-icons a {
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+}
