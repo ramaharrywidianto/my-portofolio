@@ -1,270 +1,666 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rama Harry Widianto — Portfolio</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Optional custom gradient text */
-    .gradient-text {
-      background: linear-gradient(135deg, #34d399, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rama Harry Widianto — Junior Fullstack Web Developer</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(24px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --text-light: #1e293b;
+        }
+        html.dark {
+            color-scheme: dark;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #34d399, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-text-warm {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .theme-toggle {
+            transition: transform 0.4s ease;
+        }
+        .theme-toggle:active {
+            transform: rotate(180deg) scale(0.9);
+        }
+        /* Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #34d399, #3b82f6, #8b5cf6);
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+    </style>
 </head>
-<body class="bg-gray-950 text-gray-200 font-sans antialiased">
+<body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200 font-sans antialiased transition-colors duration-300">
 
-  <!-- Header / Hero -->
-  <header class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/30 to-gray-950"></div>
-    <div class="max-w-5xl mx-auto px-6 pt-24 pb-20 relative z-10 text-center">
-      <div class="inline-flex items-center gap-2 bg-emerald-900/50 text-emerald-300 px-4 py-1.5 rounded-full text-sm font-medium mb-6 backdrop-blur">
-        <span>🚀</span> Fullstack Web Developer
-      </div>
-      <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
-        Rama Harry Widianto
-      </h1>
-      <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
-        Membangun aplikasi web modern dengan <span class="text-emerald-400 font-medium">Laravel</span>, 
-        <span class="text-blue-400 font-medium">React</span> & 
-        <span class="text-white font-medium">Next.js</span>. 
-        Fokus pada pengalaman pengguna dan performa.
-      </p>
-      <div class="flex flex-wrap justify-center gap-3">
-        <a href="#projects" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl transition-all shadow-lg shadow-emerald-600/20">
-          Lihat Proyek
-        </a>
-        <a href="#contact" class="px-6 py-3 border border-gray-700 hover:border-emerald-400 text-gray-300 hover:text-white font-medium rounded-xl transition-all">
-          Hubungi Saya
-        </a>
-      </div>
-    </div>
-  </header>
+    <!-- ========== DARK/LIGHT TOGGLE ========== -->
+    <button id="theme-toggle"
+    class="fixed top-5 right-5 z-50 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:scale-110 theme-toggle transition-all duration-300"
+    aria-label="Toggle Dark Mode"
+    title="Dark / Light Mode">
+    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+</button>
 
-  <!-- About Section -->
-  <section id="about" class="py-20 max-w-5xl mx-auto px-6">
+<!-- ========== HEADER / HERO ========== -->
+<header class="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 transition-colors duration-300">
+    <div class="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-10"></div>
+    <div class="max-w-5xl mx-auto px-6 pt-28 pb-24 relative z-10 text-center">
+        <!-- Profile Photo -->
+        <div class="mb-6 animate-float">
+            <div class="inline-block relative">
+                <div class="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 p-1 shadow-xl shadow-emerald-500/20 dark:shadow-emerald-500/10">
+                    <img
+                    src="https://ui-avatars.com/api/?name=Rama+Harry+Widianto&size=112&background=1e293b&color=34d399&bold=true&format=svg"
+                    alt="Rama Harry Widianto"
+                    class="w-full h-full rounded-full object-cover bg-gray-800"
+                    loading="lazy"
+                    width="112"
+                    height="112"
+                    onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22112%22 height=%22112%22%3E%3Crect fill=%22%231e293b%22 width=%22112%22 height=%22112%22/%3E%3Ctext fill=%22%2334d399%22 x=%2256%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2236%22%3ERH%3C/text%3E%3C/svg%3E';"
+                    >
+                </div>
+                <span class="absolute -bottom-1 -right-1 w-7 h-7 bg-green-500 rounded-full border-2 border-white dark:border-gray-900 flex items-center justify-center">
+                    <i class="fa-solid fa-check text-white text-[10px]"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 px-5 py-2 rounded-full text-sm font-semibold mb-5 backdrop-blur border border-emerald-200 dark:border-emerald-800 animate-fade-in">
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            Available for opportunities
+        </div>
+
+        <!-- Name -->
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-3 tracking-tight animate-slide-up">
+            Rama Harry Widianto
+        </h1>
+
+        <!-- Title -->
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-3 leading-relaxed animate-slide-up" style="animation-delay: 0.1s;">
+            <span class="gradient-text font-semibold">Junior Fullstack Web Developer</span>
+        </p>
+
+        <!-- Tagline -->
+        <p class="text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+            Membangun aplikasi web modern dengan <span class="text-emerald-600 dark:text-emerald-400 font-medium">Laravel</span>,
+            <span class="text-blue-600 dark:text-blue-400 font-medium">React</span> &
+            <span class="text-gray-800 dark:text-white font-medium">Next.js</span>.
+            Fokus pada pengalaman pengguna, performa, dan kode yang bersih.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 animate-slide-up" style="animation-delay: 0.3s;">
+            <a href="#projects"
+            class="px-7 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/40 inline-flex items-center gap-2">
+            <i class="fa-solid fa-folder-open"></i> Lihat Proyek
+        </a>
+        <a href="#contact"
+        class="px-7 py-3.5 border-2 border-gray-300 dark:border-gray-700 hover:border-emerald-400 dark:hover:border-emerald-400 text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-300 font-semibold rounded-xl transition-all inline-flex items-center gap-2">
+        <i class="fa-solid fa-paper-plane"></i> Hubungi Saya
+    </a>
+    <a href="https://github.com/ramaharrywidianto" target="_blank" rel="noopener"
+    class="px-7 py-3.5 bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white font-semibold rounded-xl transition-all shadow-lg inline-flex items-center gap-2">
+    <i class="fa-brands fa-github"></i> GitHub
+</a>
+</div>
+</div>
+</header>
+
+<!-- ========== ABOUT SECTION ========== -->
+<section id="about" class="py-20 max-w-5xl mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <h2 class="text-3xl font-bold mb-6">👨‍💻 Tentang Saya</h2>
-        <p class="text-gray-400 leading-relaxed mb-4">
-          Halo, saya <span class="text-white font-medium">Rama Harry Widianto</span>. Saya seorang developer yang memiliki ketertarikan pada pengembangan web fullstack, ekosistem Laravel, React & Next.js, desain UI/UX, Linux server, Docker, hingga cybersecurity dan networking.
-        </p>
-        <p class="text-gray-400 leading-relaxed">
-          Saya percaya bahwa belajar paling efektif dilakukan melalui proyek nyata. Seluruh repository saya adalah dokumentasi perjalanan belajar — dari tugas PKL, tes magang, sampai project pribadi.
-        </p>
-      </div>
-      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-        <h3 class="text-lg font-semibold text-emerald-400 mb-4">📈 Ringkasan GitHub</h3>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-gray-800 rounded-xl p-4 text-center">
-            <span class="block text-3xl font-bold text-white">7+</span>
-            <span class="text-sm text-gray-400">Public Repos</span>
-          </div>
-          <div class="bg-gray-800 rounded-xl p-4 text-center">
-            <span class="block text-3xl font-bold text-white">4</span>
-            <span class="text-sm text-gray-400">Laravel Projects</span>
-          </div>
-          <div class="bg-gray-800 rounded-xl p-4 text-center">
-            <span class="block text-3xl font-bold text-white">3</span>
-            <span class="text-sm text-gray-400">React Projects</span>
-          </div>
-          <div class="bg-gray-800 rounded-xl p-4 text-center">
-            <span class="block text-3xl font-bold text-white">2</span>
-            <span class="text-sm text-gray-400">UI Design</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Tech Stack -->
-  <section class="py-16 border-t border-gray-800">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-12">🛠 Tech Stack</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <!-- Frontend -->
-        <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500/50 transition-all">
-          <h3 class="text-emerald-400 font-semibold mb-4">Frontend</h3>
-          <ul class="space-y-2 text-gray-300 text-sm">
-            <li>HTML5</li><li>CSS3</li><li>JavaScript</li>
-            <li>Bootstrap</li><li>Tailwind CSS</li>
-            <li>React</li><li>Next.js</li><li>Astro</li>
-          </ul>
-        </div>
-        <!-- Backend -->
-        <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500/50 transition-all">
-          <h3 class="text-emerald-400 font-semibold mb-4">Backend</h3>
-          <ul class="space-y-2 text-gray-300 text-sm">
-            <li>PHP</li><li>Laravel</li><li>REST API</li>
-          </ul>
-        </div>
-        <!-- Database -->
-        <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500/50 transition-all">
-          <h3 class="text-emerald-400 font-semibold mb-4">Database</h3>
-          <ul class="space-y-2 text-gray-300 text-sm">
-            <li>MySQL</li><li>MariaDB</li>
-          </ul>
-        </div>
-        <!-- Tools -->
-        <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500/50 transition-all">
-          <h3 class="text-emerald-400 font-semibold mb-4">Tools</h3>
-          <ul class="space-y-2 text-gray-300 text-sm">
-            <li>Git</li><li>GitHub</li><li>Docker</li>
-            <li>Linux</li><li>VS Code</li><li>Figma</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Projects -->
-  <section id="projects" class="py-20 max-w-5xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-4">📂 Proyek Unggulan</h2>
-    <p class="text-gray-400 text-center mb-12 max-w-xl mx-auto">Beberapa hasil karya dari perjalanan belajar dan praktik. Klik kartu untuk melihat repository.</p>
-    
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Project Card 1 -->
-      <a href="https://github.com/ramaharrywidianto/my-portofolio" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">🌐</span>
-          <span class="text-xs bg-emerald-900/60 text-emerald-300 px-2 py-0.5 rounded-full">Personal</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">My Portfolio</h3>
-        <p class="text-gray-400 text-sm mb-4">Website portfolio pribadi berisi informasi diri, skill, pengalaman, dan project.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">HTML</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">CSS</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">JavaScript</span>
-        </div>
-      </a>
-
-      <!-- Project Card 2 -->
-      <a href="https://github.com/ramaharrywidianto/my-resume" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">📄</span>
-          <span class="text-xs bg-blue-900/60 text-blue-300 px-2 py-0.5 rounded-full">CV Online</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">My Resume</h3>
-        <p class="text-gray-400 text-sm mb-4">CV online praktis untuk recruiter melihat pengalaman dan skill.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">HTML</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">CSS</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">JavaScript</span>
-        </div>
-      </a>
-
-      <!-- Project Card 3 -->
-      <a href="https://github.com/ramaharrywidianto/Tes-Magang---RamaHarryWidiantoReact-Vite" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">💼</span>
-          <span class="text-xs bg-purple-900/60 text-purple-300 px-2 py-0.5 rounded-full">Tes Magang</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">Tes Magang React + Vite</h3>
-        <p class="text-gray-400 text-sm mb-4">Project seleksi magang menggunakan React dan Vite.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">React</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">Vite</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">JavaScript</span>
-        </div>
-      </a>
-
-      <!-- Project Card 4 -->
-      <a href="https://github.com/ramaharrywidianto/Buku-tamu-digital" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">📝</span>
-          <span class="text-xs bg-red-900/60 text-red-300 px-2 py-0.5 rounded-full">PKL</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">Buku Tamu Digital</h3>
-        <p class="text-gray-400 text-sm mb-4">Aplikasi buku tamu digital dengan login, CRUD, dashboard, dan laporan.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">Laravel</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">MySQL</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">Bootstrap</span>
-        </div>
-      </a>
-
-      <!-- Project Card 5 -->
-      <a href="https://github.com/ramaharrywidianto/sistem_stock_barang" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">📦</span>
-          <span class="text-xs bg-yellow-900/60 text-yellow-300 px-2 py-0.5 rounded-full">Inventory</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">Sistem Stock Barang</h3>
-        <p class="text-gray-400 text-sm mb-4">Manajemen stok barang, pencatatan masuk/keluar, dan laporan.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">Laravel</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">MySQL</span>
-        </div>
-      </a>
-
-      <!-- Project Card 6 -->
-      <a href="https://github.com/ramaharrywidianto/inventory" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">📊</span>
-          <span class="text-xs bg-yellow-900/60 text-yellow-300 px-2 py-0.5 rounded-full">Inventory</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">Inventory Management</h3>
-        <p class="text-gray-400 text-sm mb-4">Sistem inventaris digital dengan dashboard dan pencarian.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">Laravel</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">MySQL</span>
-        </div>
-      </a>
-
-      <!-- Project Card 7 -->
-      <a href="https://github.com/ramaharrywidianto/astro-platform-starter" target="_blank" class="group bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500 transition-all hover:shadow-xl hover:shadow-emerald-500/10">
-        <div class="flex justify-between items-start mb-4">
-          <span class="text-2xl">🚀</span>
-          <span class="text-xs bg-orange-900/60 text-orange-300 px-2 py-0.5 rounded-full">Experimental</span>
-        </div>
-        <h3 class="text-lg font-semibold text-white group-hover:text-emerald-400 mb-2">Astro Platform Starter</h3>
-        <p class="text-gray-400 text-sm mb-4">Eksperimen framework Astro untuk website modern performa tinggi.</p>
-        <div class="flex flex-wrap gap-1.5">
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">Astro</span>
-          <span class="text-xs bg-gray-800 px-2 py-0.5 rounded">JavaScript</span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- Current Focus -->
-  <section class="py-16 border-t border-gray-800">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-8">🎯 Fokus Belajar Saat Ini</h2>
-      <div class="flex flex-wrap justify-center gap-3">
-        <span class="px-4 py-2 bg-emerald-900/40 border border-emerald-800 text-emerald-300 rounded-full text-sm">Laravel 12/13</span>
-        <span class="px-4 py-2 bg-blue-900/40 border border-blue-800 text-blue-300 rounded-full text-sm">React</span>
-        <span class="px-4 py-2 bg-white/10 border border-gray-700 text-white rounded-full text-sm">Next.js</span>
-        <span class="px-4 py-2 bg-blue-600/30 border border-blue-500 text-blue-200 rounded-full text-sm">TypeScript</span>
-        <span class="px-4 py-2 bg-cyan-900/40 border border-cyan-800 text-cyan-300 rounded-full text-sm">Docker</span>
-        <span class="px-4 py-2 bg-purple-900/40 border border-purple-800 text-purple-300 rounded-full text-sm">DevOps</span>
-        <span class="px-4 py-2 bg-red-900/40 border border-red-800 text-red-300 rounded-full text-sm">Cybersecurity</span>
-        <span class="px-4 py-2 bg-yellow-900/40 border border-yellow-800 text-yellow-300 rounded-full text-sm">Linux Server</span>
-        <span class="px-4 py-2 bg-gray-700/60 border border-gray-600 text-gray-200 rounded-full text-sm">Networking</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact & Footer -->
-  <section id="contact" class="py-20 bg-gray-900/50">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-4">📫 Hubungi Saya</h2>
-      <p class="text-gray-400 mb-8 max-w-md mx-auto">Jangan ragu untuk terhubung atau berdiskusi seputar web development.</p>
-      <div class="flex justify-center gap-4 flex-wrap">
-        <a href="https://github.com/ramaharrywidianto" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl transition-all border border-gray-700">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          GitHub
+        <!-- Left: Text -->
+        <div class="animate-slide-up">
+            <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
+                <span class="text-3xl">👨‍💻</span> Tentang Saya
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4 text-justify">
+                Halo! Saya <span class="font-semibold text-gray-900 dark:text-white">Rama Harry Widianto</span>,
+                lulusan <strong>SMK Negeri 1 Sanden</strong> jurusan <strong>Rekayasa Perangkat Lunak (RPL)</strong>.
+                Saya telah menyelesaikan <strong>PKL selama 5 bulan</strong> di <strong>CV. Soraya World</strong>
+                sebagai <strong>Fullstack Web Developer Intern</strong>.
+            </p>
+            <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
+                Saya memiliki pengalaman mengembangkan aplikasi berbasis Laravel, PHP, MySQL, JavaScript,
+                Bootstrap, dan Tailwind CSS — mulai dari analisis kebutuhan, implementasi fitur,
+                hingga proses debugging dan deployment. Saya percaya belajar paling efektif melalui proyek nyata,
+                dan seluruh repository saya adalah dokumentasi perjalanan tersebut.
+            </p>
+            <!-- Quick Links -->
+            <div class="flex flex-wrap gap-3 mt-6">
+                <a href="https://ramaharrywidianto.my.id" target="_blank" rel="noopener"
+                class="inline-flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+                <i class="fa-solid fa-globe"></i> ramaharrywidianto.my.id
+            </a>
+            <a href="https://portofolio-ramaharrywidianto.ct.ws/?i=1" target="_blank" rel="noopener"
+            class="inline-flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+            <i class="fa-solid fa-folder-open"></i> Portfolio Lengkap
         </a>
-        <span class="inline-flex items-center gap-2 px-6 py-3 bg-gray-800/50 text-gray-400 rounded-xl border border-gray-700 cursor-not-allowed">
-          🌐 Portfolio (Coming Soon)
-        </span>
-      </div>
-      <p class="mt-10 text-sm text-gray-600">© 2025 Rama Harry Widianto — Dibuat dengan Tailwind CSS 🚀</p>
     </div>
-  </section>
+</div>
 
+<!-- Right: GitHub Summary Card -->
+<div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm animate-slide-up" style="animation-delay: 0.15s;">
+    <h3 class="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mb-5 flex items-center gap-2">
+        <i class="fa-brands fa-github"></i> Ringkasan GitHub
+    </h3>
+    <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-sm border border-gray-100 dark:border-gray-700">
+            <span class="block text-3xl font-bold text-gray-900 dark:text-white">8+</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Public Repos</span>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-sm border border-gray-100 dark:border-gray-700">
+            <span class="block text-3xl font-bold text-gray-900 dark:text-white">4</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Laravel Projects</span>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-sm border border-gray-100 dark:border-gray-700">
+            <span class="block text-3xl font-bold text-gray-900 dark:text-white">3</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">React Projects</span>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-sm border border-gray-100 dark:border-gray-700">
+            <span class="block text-3xl font-bold text-gray-900 dark:text-white">2</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">UI/UX Design</span>
+        </div>
+    </div>
+    <!-- Visitor Counter -->
+    <div class="mt-5 pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
+        <span class="text-xs text-gray-500 dark:text-gray-400">👀 Pengunjung Portfolio</span>
+        <div class="mt-1">
+            <img
+            src="https://komarev.com/ghpvc/?username=ramaharrywidianto&style=flat-square&color=10b981&label=Visitors"
+            alt="Visitor Counter"
+            class="inline-block h-6"
+            loading="lazy"
+            />
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- ========== TIMELINE PENGALAMAN ========== -->
+<section class="py-16 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 transition-colors">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-14 flex items-center justify-center gap-3">
+            <span>💼</span> Timeline Pengalaman
+        </h2>
+
+        <div class="relative">
+            <!-- Vertical Line -->
+            <div class="timeline-line hidden md:block"></div>
+
+            <!-- Timeline Item 1 -->
+            <div class="relative flex flex-col md:flex-row items-start mb-12 md:mb-10 animate-slide-up">
+                <div class="md:w-1/2 md:pr-12 md:text-right mb-3 md:mb-0 order-1 md:order-1">
+                    <span class="inline-block bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                        Juli 2025 – November 2025
+                    </span>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Fullstack Web Developer Intern</h3>
+                    <p class="text-emerald-600 dark:text-emerald-400 font-medium text-sm">CV. Soraya World</p>
+                </div>
+                <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-emerald-500 rounded-full border-4 border-white dark:border-gray-900 z-10 shadow-md order-2"></div>
+                <div class="md:w-1/2 md:pl-12 order-3 md:order-3 text-sm text-gray-600 dark:text-gray-400">
+                    <ul class="space-y-1.5 list-disc list-inside">
+                        <li>Mengembangkan aplikasi berbasis Laravel</li>
+                        <li>Mendesain database MySQL</li>
+                        <li>Membuat fitur CRUD & autentikasi</li>
+                        <li>Debugging & deployment aplikasi</li>
+                        <li>Kolaborasi dengan mentor & tim</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="relative flex flex-col md:flex-row items-start mb-12 md:mb-10 animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="md:w-1/2 md:pr-12 md:text-right mb-3 md:mb-0 order-1 md:order-3 md:text-left md:pl-12">
+                    <span class="inline-block bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                        2022 – 2025
+                    </span>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">SMK Negeri 1 Sanden</h3>
+                    <p class="text-blue-600 dark:text-blue-400 font-medium text-sm">Rekayasa Perangkat Lunak (RPL)</p>
+                </div>
+                <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full border-4 border-white dark:border-gray-900 z-10 shadow-md order-2"></div>
+                <div class="md:w-1/2 md:pr-12 md:text-right order-3 md:order-1 text-sm text-gray-600 dark:text-gray-400">
+                    <p>Fokus pada pengembangan web, database, dan pemrograman berorientasi objek. Aktif dalam project sekolah dan lomba.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== GITHUB STATS SECTION ========== -->
+<section class="py-16 max-w-5xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-4 flex items-center justify-center gap-3">
+        <i class="fa-brands fa-github"></i> GitHub Stats
+    </h2>
+    <p class="text-gray-500 dark:text-gray-400 text-center mb-10 max-w-lg mx-auto text-sm">
+        Statistik kontribusi dan bahasa yang sering digunakan di repository publik.
+    </p>
+
+    <!-- GitHub Stats Cards -->
+    <div class="flex flex-wrap justify-center gap-6 mb-10">
+        <img
+        src="https://github-readme-stats.vercel.app/api?username=ramaharrywidianto&show_icons=true&theme=vue-dark&hide_border=true&count_private=true&include_all_commits=true&bg_color=0f172a&title_color=34d399&icon_color=3b82f6&text_color=cbd5e1&border_radius=16&cache_seconds=1800"
+        alt="GitHub Stats"
+        class="rounded-2xl shadow-lg max-w-full h-auto"
+        loading="lazy"
+        width="420"
+        height="180"
+        />
+        <img
+        src="https://github-readme-stats.vercel.app/api/top-langs/?username=ramaharrywidianto&layout=compact&theme=vue-dark&hide_border=true&bg_color=0f172a&title_color=34d399&text_color=cbd5e1&border_radius=16&cache_seconds=1800"
+        alt="Top Languages"
+        class="rounded-2xl shadow-lg max-w-full h-auto"
+        loading="lazy"
+        width="340"
+        height="180"
+        />
+    </div>
+
+    <!-- Contribution Graph -->
+    <div class="text-center">
+        <img
+        src="https://ghchart.rshah.org/10b981/ramaharrywidianto"
+        alt="GitHub Contribution Graph"
+        class="rounded-2xl shadow-md inline-block max-w-full dark:hidden"
+        loading="lazy"
+        />
+        <img
+        src="https://ghchart.rshah.org/34d399/ramaharrywidianto"
+        alt="GitHub Contribution Graph Dark"
+        class="rounded-2xl shadow-md inline-block max-w-full hidden dark:block"
+        loading="lazy"
+        />
+    </div>
+</section>
+
+<!-- ========== TECH STACK ========== -->
+<section class="py-16 border-t border-gray-200 dark:border-gray-800 transition-colors">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-12">🛠 Tech Stack</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+            <!-- Frontend -->
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+                <h3 class="text-emerald-600 dark:text-emerald-400 font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-code"></i> Frontend
+                </h3>
+                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <li>HTML5</li><li>CSS3</li><li>JavaScript (ES6+)</li>
+                    <li>TypeScript</li><li>React</li><li>Next.js</li>
+                    <li>Bootstrap</li><li>Tailwind CSS</li><li>Astro</li>
+                </ul>
+            </div>
+            <!-- Backend -->
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500 card-hover transition-all">
+                <h3 class="text-blue-600 dark:text-blue-400 font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-server"></i> Backend
+                </h3>
+                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <li>PHP</li><li>Laravel</li><li>REST API</li>
+                    <li>Node.js (Basic)</li>
+                </ul>
+            </div>
+            <!-- Database -->
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-yellow-400 dark:hover:border-yellow-500 card-hover transition-all">
+                <h3 class="text-yellow-600 dark:text-yellow-400 font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-database"></i> Database
+                </h3>
+                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <li>MySQL</li><li>MariaDB</li><li>SQLite</li>
+                </ul>
+            </div>
+            <!-- Tools -->
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-purple-400 dark:hover:border-purple-500 card-hover transition-all">
+                <h3 class="text-purple-600 dark:text-purple-400 font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-toolbox"></i> Tools
+                </h3>
+                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                    <li>Git & GitHub</li><li>Docker</li><li>Linux Server</li>
+                    <li>VS Code</li><li>Figma</li><li>Postman</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FEATURED PROJECTS ========== -->
+<section id="projects" class="py-20 max-w-5xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-3">📂 Proyek Unggulan</h2>
+    <p class="text-gray-500 dark:text-gray-400 text-center mb-12 max-w-xl mx-auto text-sm">
+        Beberapa hasil karya dari perjalanan belajar dan praktik. Klik kartu untuk melihat repository.
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Project Cards -->
+        <!-- 1: My Portfolio -->
+        <a href="https://github.com/ramaharrywidianto/my-portofolio" target="_blank" rel="noopener"
+        class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+        <div class="flex justify-between items-start mb-4">
+            <span class="text-3xl">🌐</span>
+            <span class="text-xs bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-full font-medium">Personal</span>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">My Portfolio</h3>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Website portfolio pribadi berisi informasi diri, skill, pengalaman, dan project.</p>
+        <div class="flex flex-wrap gap-1.5">
+            <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">HTML</span>
+            <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">CSS</span>
+            <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">JavaScript</span>
+        </div>
+    </a>
+
+    <!-- 2: My Resume -->
+    <a href="https://github.com/ramaharrywidianto/my-resume" target="_blank" rel="noopener"
+    class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+    <div class="flex justify-between items-start mb-4">
+        <span class="text-3xl">📄</span>
+        <span class="text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full font-medium">CV Online</span>
+    </div>
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">My Resume</h3>
+    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">CV online praktis untuk recruiter melihat pengalaman dan skill secara cepat.</p>
+    <div class="flex flex-wrap gap-1.5">
+        <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">HTML</span>
+        <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">CSS</span>
+        <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">JavaScript</span>
+    </div>
+</a>
+
+<!-- 3: Tes Magang React -->
+<a href="https://github.com/ramaharrywidianto/Tes-Magang---RamaHarryWidiantoReact-Vite" target="_blank" rel="noopener"
+class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+    <span class="text-3xl">💼</span>
+    <span class="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full font-medium">Tes Magang</span>
+</div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">Tes Magang React + Vite</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Project seleksi magang menggunakan React dan Vite dengan fitur lengkap.</p>
+<div class="flex flex-wrap gap-1.5">
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">React</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Vite</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">JavaScript</span>
+</div>
+</a>
+
+<!-- 4: Buku Tamu Digital -->
+<a href="https://github.com/ramaharrywidianto/Buku-tamu-digital" target="_blank" rel="noopener"
+class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+    <span class="text-3xl">📝</span>
+    <span class="text-xs bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-3 py-1 rounded-full font-medium">PKL</span>
+</div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">Buku Tamu Digital</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Aplikasi buku tamu digital dengan login, CRUD, dashboard, dan laporan PDF.</p>
+<div class="flex flex-wrap gap-1.5">
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Laravel</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">MySQL</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Bootstrap</span>
+</div>
+</a>
+
+<!-- 5: Sistem Stock Barang -->
+<a href="https://github.com/ramaharrywidianto/sistem_stock_barang" target="_blank" rel="noopener"
+class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+    <span class="text-3xl">📦</span>
+    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300 px-3 py-1 rounded-full font-medium">Inventory</span>
+</div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">Sistem Stock Barang</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Manajemen stok barang, pencatatan masuk/keluar, dan laporan stok real-time.</p>
+<div class="flex flex-wrap gap-1.5">
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Laravel</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">MySQL</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Tailwind</span>
+</div>
+</a>
+
+<!-- 6: Inventory Management -->
+<a href="https://github.com/ramaharrywidianto/inventory" target="_blank" rel="noopener"
+class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+    <span class="text-3xl">📊</span>
+    <span class="text-xs bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300 px-3 py-1 rounded-full font-medium">Inventory</span>
+</div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">Inventory Management</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Sistem inventaris digital dengan dashboard interaktif dan pencarian data.</p>
+<div class="flex flex-wrap gap-1.5">
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Laravel</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">MySQL</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Chart.js</span>
+</div>
+</a>
+
+<!-- 7: Astro Platform Starter -->
+<a href="https://github.com/ramaharrywidianto/astro-platform-starter" target="_blank" rel="noopener"
+class="group bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-emerald-400 dark:hover:border-emerald-500 card-hover transition-all lg:col-span-3 md:col-span-2 max-w-sm mx-auto lg:max-w-none">
+<div class="flex justify-between items-start mb-4">
+    <span class="text-3xl">🚀</span>
+    <span class="text-xs bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full font-medium">Experimental</span>
+</div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 mb-2 transition-colors">Astro Platform Starter</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Eksperimen framework Astro untuk website modern dengan performa tinggi.</p>
+<div class="flex flex-wrap gap-1.5">
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">Astro</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">JavaScript</span>
+    <span class="text-xs bg-white dark:bg-gray-800 px-2.5 py-1 rounded-md border border-gray-200 dark:border-gray-700">MDX</span>
+</div>
+</a>
+</div>
+</section>
+
+<!-- ========== CURRENT FOCUS ========== -->
+<section class="py-16 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 transition-colors">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-8">🎯 Fokus Belajar Saat Ini</h2>
+        <div class="flex flex-wrap justify-center gap-3">
+            <span class="px-5 py-2.5 bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 rounded-full text-sm font-medium">Laravel</span>
+            <span class="px-5 py-2.5 bg-blue-100 dark:bg-blue-900/40 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium">React</span>
+            <span class="px-5 py-2.5 bg-gray-100 dark:bg-white/10 border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white rounded-full text-sm font-medium">Next.js</span>
+            <span class="px-5 py-2.5 bg-sky-100 dark:bg-sky-900/40 border border-sky-300 dark:border-sky-700 text-sky-800 dark:text-sky-300 rounded-full text-sm font-medium">TypeScript</span>
+            <span class="px-5 py-2.5 bg-cyan-100 dark:bg-cyan-900/40 border border-cyan-300 dark:border-cyan-700 text-cyan-800 dark:text-cyan-300 rounded-full text-sm font-medium">Docker</span>
+            <span class="px-5 py-2.5 bg-purple-100 dark:bg-purple-900/40 border border-purple-300 dark:border-purple-700 text-purple-800 dark:text-purple-300 rounded-full text-sm font-medium">DevOps</span>
+            <span class="px-5 py-2.5 bg-red-100 dark:bg-red-900/40 border border-red-300 dark:border-red-700 text-red-800 dark:text-red-300 rounded-full text-sm font-medium">Cybersecurity</span>
+            <span class="px-5 py-2.5 bg-amber-100 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 rounded-full text-sm font-medium">Linux Server</span>
+            <span class="px-5 py-2.5 bg-gray-200 dark:bg-gray-700/60 border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-full text-sm font-medium">Networking</span>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section id="contact" class="py-20 bg-gray-100 dark:bg-gray-900/70 transition-colors">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-4">📫 Hubungi Saya</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-10 max-w-md mx-auto">
+            Jangan ragu untuk terhubung atau berdiskusi seputar web development, internship, atau kolaborasi project.
+        </p>
+        <div class="flex justify-center gap-4 flex-wrap">
+            <a href="https://github.com/ramaharrywidianto" target="_blank" rel="noopener"
+            class="inline-flex items-center gap-2 px-6 py-3.5 bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-xl transition-all shadow-lg font-medium">
+            <i class="fa-brands fa-github text-lg"></i> GitHub
+        </a>
+        <a href="https://portofolio-ramaharrywidianto.ct.ws/?i=1" target="_blank" rel="noopener"
+        class="inline-flex items-center gap-2 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl transition-all shadow-lg font-medium">
+        <i class="fa-solid fa-globe"></i> Portfolio
+    </a>
+    <a href="mailto:rama@ramaharrywidianto.my.id"
+    class="inline-flex items-center gap-2 px-6 py-3.5 border-2 border-gray-300 dark:border-gray-600 hover:border-emerald-400 text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-300 rounded-xl transition-all font-medium">
+    <i class="fa-solid fa-envelope"></i> Email
+</a>
+<a href="https://wa.me/6281234567890" target="_blank" rel="noopener"
+class="inline-flex items-center gap-2 px-6 py-3.5 border-2 border-gray-300 dark:border-gray-600 hover:border-green-400 text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-300 rounded-xl transition-all font-medium">
+<i class="fa-brands fa-whatsapp"></i> WhatsApp
+</a>
+</div>
+</div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="py-8 border-t border-gray-200 dark:border-gray-800 text-center transition-colors">
+    <div class="max-w-5xl mx-auto px-6">
+        <p class="text-sm text-gray-500 dark:text-gray-500">
+            © 2026 Rama Harry Widianto — Dibangun dengan
+            <span class="text-red-400">❤️</span> menggunakan Tailwind CSS
+            <span class="mx-2">•</span>
+            <a href="https://github.com/ramaharrywidianto" target="_blank" rel="noopener" class="hover:text-emerald-500 transition-colors">
+                <i class="fa-brands fa-github"></i> @ramaharrywidianto
+            </a>
+        </p>
+    </div>
+</footer>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+    // ── Dark/Light Mode Toggle ──────────────
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
+
+    // Check localStorage or system preference
+    const storedTheme = localStorage.getItem('theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (storedTheme === 'dark' || (!storedTheme && systemDark)) {
+        html.classList.add('dark');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+    } else {
+        html.classList.remove('dark');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const isDark = html.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        if (isDark) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    });
+
+    // ── Intersection Observer for Animations ──
+    const animatedElements = document.querySelectorAll('.animate-slide-up, .animate-fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+    animatedElements.forEach(el => {
+        // Pause animation initially so it triggers on scroll
+        el.style.animationPlayState = 'paused';
+        observer.observe(el);
+    });
+
+    // Trigger animations for elements already in view on load
+    window.addEventListener('load', () => {
+        animatedElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                el.style.animationPlayState = 'running';
+            }
+        });
+    });
+
+    // ── Smooth scroll for anchor links ──────
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ── Update visitor counter periodically ──
+    // The counter image is loaded from an external service; no additional action needed.
+    console.log('%c🚀 Portfolio ready! %c© 2026 Rama Harry Widianto',
+        'color: #34d399; font-size: 16px;', 'color: #94a3b8;');
+    console.log('%c💡 Tip: Klik ikon 🌙/☀️ untuk mengganti tema.', 'color: #f59e0b;');
+</script>
 </body>
 </html>
